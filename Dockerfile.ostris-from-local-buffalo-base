@@ -1,0 +1,12 @@
+FROM ghcr.io/buffalobuffalobuffalobuffalo/ai-toolkit-perceptual:latest
+ARG CACHEBUST=1
+ARG GIT_COMMIT=main
+RUN echo "Building original Ostris AI Toolkit from commit ${GIT_COMMIT}, cache ${CACHEBUST}" &&     rm -rf /app/ai-toolkit &&     git clone https://github.com/ostris/ai-toolkit.git /app/ai-toolkit &&     cd /app/ai-toolkit &&     git checkout ${GIT_COMMIT}
+WORKDIR /app/ai-toolkit
+RUN pip install --no-cache-dir --break-system-packages -r requirements.txt &&     pip install setuptools==69.5.1 --no-cache-dir --break-system-packages
+WORKDIR /app/ai-toolkit/ui
+RUN npm install && npm run build && npm run update_db
+WORKDIR /
+COPY docker/start.sh /start.sh
+RUN sed -i 's/\r$//' /start.sh && chmod +x /start.sh
+CMD ["/start.sh"]

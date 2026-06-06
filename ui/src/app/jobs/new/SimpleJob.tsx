@@ -1,5 +1,5 @@
 'use client';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   modelArchs,
   ModelArch,
@@ -30,12 +30,13 @@ import AddSingleImageModal, { openAddImageModal } from '@/components/AddSingleIm
 import SampleControlImage from '@/components/SampleControlImage';
 import { FlipHorizontal2, FlipVertical2 } from 'lucide-react';
 import { handleModelArchChange } from './utils';
+import { QUICKSTARTS } from './quickstarts';
 import { IoFlaskSharp } from 'react-icons/io5';
 import { isMac } from '@/helpers/basic';
 
 type Props = {
   jobConfig: JobConfig;
-  setJobConfig: (value: any, key: string) => void;
+  setJobConfig: (value: any, key?: string) => void;
   status: 'idle' | 'saving' | 'success' | 'error';
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   runId: string | null;
@@ -60,6 +61,21 @@ export default function SimpleJob({
   datasetOptions,
   isLoading,
 }: Props) {
+  const [selectedQuickstart, setSelectedQuickstart] = useState<string>('');
+
+  const applyQuickstart = (quickstartId: string) => {
+    const quickstart = QUICKSTARTS.find(template => template.id === quickstartId);
+    if (!quickstart) return;
+
+    const confirmed = window.confirm(
+      `Apply ${quickstart.label}?\n\nThis will update model/network/train/save settings. Training name, trigger word, all dataset config, and sample prompts stay as they are.`,
+    );
+    if (!confirmed) return;
+
+    setSelectedQuickstart(quickstartId);
+    setJobConfig(quickstart.apply(jobConfig));
+  };
+
   const modelArch = useMemo(() => {
     return modelArchs.find(a => a.name === jobConfig.config.process[0].model.arch) as ModelArch;
   }, [jobConfig.config.process[0].model.arch]);
@@ -235,6 +251,24 @@ export default function SimpleJob({
         )}
         <div className={topBarClass}>
           <Card title="Job">
+            <SelectInput
+              label="Quickstart Template"
+              value={selectedQuickstart}
+              onChange={applyQuickstart}
+              options={[
+                { value: '', label: 'Choose template...' },
+                ...QUICKSTARTS.map(template => ({
+                  value: template.id,
+                  label: template.label,
+                })),
+              ]}
+              disabled={runId !== null}
+            />
+            {selectedQuickstart && (
+              <p className="mt-2 text-xs text-gray-400">
+                {QUICKSTARTS.find(template => template.id === selectedQuickstart)?.description}
+              </p>
+            )}
             <TextInput
               label="Training Name"
               value={jobConfig.config.name}

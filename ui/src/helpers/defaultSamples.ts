@@ -7,37 +7,21 @@ export const defaultSampleConfig: SampleConfig = {
   height: 1024,
   samples: [
     {
-      prompt: 'woman with red hair, playing chess at the park, bomb going off in the background',
+      prompt: 'photo of [trigger] woman, close-up portrait, natural skin texture, detailed face, soft daylight, neutral background',
     },
     {
-      prompt: 'a woman holding a coffee cup, in a beanie, sitting at a cafe',
+      prompt: 'photo of [trigger] woman, half-body framing, wearing a black dress, smiling expression, city street background, realistic photography',
     },
     {
-      prompt: 'a horse is a DJ at a night club, fish eye lens, smoke machine, lazer lights, holding a martini',
+      prompt: 'photo of [trigger] woman, nude full-body standing pose, outdoor daylight, natural candid photo',
+      width: 720,
+      height: 1080,
     },
     {
-      prompt:
-        'a man showing off his cool new t shirt at the beach, a shark is jumping out of the water in the background',
+      prompt: 'photo of [trigger] woman, seated pose, relaxed expression, indoor room background, realistic camera photo',
     },
     {
-      prompt: 'a bear building a log cabin in the snow covered mountains',
-    },
-    {
-      prompt: 'woman playing the guitar, on stage, singing a song, laser lights, punk rocker',
-    },
-    {
-      prompt: 'hipster man with a beard, building a chair, in a wood shop',
-    },
-    {
-      prompt:
-        'photo of a man, white background, medium shot, modeling clothing, studio lighting, white backdrop',
-    },
-    {
-      prompt: "a man holding a sign that says, 'this is a sign'",
-    },
-    {
-      prompt:
-        'a bulldog, in a post apocalyptic world, with a shotgun, in a leather jacket, in a desert, with a motorcycle',
+      prompt: 'photo of [trigger] woman, side-angle portrait, detailed eyes and hair, shallow depth of field, realistic skin',
     },
   ],
   neg: '',
