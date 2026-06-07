@@ -22,31 +22,7 @@ const extensionsImage = ['jpg', 'jpeg', 'png', 'bmp', 'webp'];
 
 const defaultExtensions = [...extensionsImage];
 
-export const defaultImageCaptionPrompt = `Caption this image for a reusable image-generation training dataset.
-
-Start every caption with the exact token: [trigger]
-
-After [trigger], write a detailed but accurate comma-separated natural-language caption. Captions should describe what is visibly present so the trained model can learn the subject, pose, outfit, framing, and scene without learning wrong details.
-
-Include only things clearly visible:
-- subject class such as woman, man, person, animal, object, or product
-- outfit and clothing colors/materials
-- pose, action, gesture, hand position, facial expression, camera angle, close-up/half-body/full-body framing
-- hair style/color only if visible and useful, accessories, makeup, tattoos, glasses, jewelry
-- background/setting, important objects, lighting, weather, photo style, and image quality if visible and useful
-
-Do not invent anything. Do not say the subject is standing when sitting, smiling when neutral, indoors when outdoors, etc.
-
-Keep identity anchored in [trigger]. Do not use a real person name. Do not over-describe stable identity traits unless they are visually obvious and useful for generation.
-
-No hedging phrases: no appears to, seems to, possibly, maybe, likely. No preamble. No bullets.
-
-Output one caption line only.
-
-Good: [trigger] woman, close-up portrait, long blonde hair, black off-shoulder dress, smiling expression, soft daylight, neutral blurred background, realistic photo
-Good: [trigger] person, full-body standing pose, white crop top, blue jeans, one hand on hip, city street background, natural daylight, candid realistic photo
-Bad: [trigger], maybe a person possibly standing somewhere, nice image
-`;
+const defaultImageCaptionPrompt = "Caption this image as if you were going to try to generate it with an image generator. Be thurough and describe everything in the image. Be decisive by stating things as they are. Do not say things like \"It appears that\" Or \"possibly\". Start out with things like \"A person on the beach\" or \"A black dragon\". No preamble. Just get to the point.";
 
 // Editable ADDITIONAL INSTRUCTIONS block injected into the Ideogram system prompt.
 // Users can tweak this for dataset-specific guidance without altering the fixed
